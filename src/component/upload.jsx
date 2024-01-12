@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './upload.css';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { MdOutlineAccountCircle } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom'; // Updated import
 import { Link } from 'react-router-dom';
+import { MDBFooter, MDBContainer, MDBCol, MDBRow, MDBIcon, MDBBtn} from 'mdb-react-ui-kit';
+import './upload.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { MDBFooter, MDBContainer, MDBCol, MDBRow, MDBIcon, MDBBtn} from 'mdb-react-ui-kit';
 
 const Upload = () => {
   const [selectedImage, setSelectedImage] = useState(null);
