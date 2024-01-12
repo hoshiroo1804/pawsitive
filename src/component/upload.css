@@ -2,7 +2,7 @@
 
 .body-section {
     width: 1263px;
-    height: 1024px;
+    height: 1100px;
     background: #FFD1DA;
   }
 
@@ -21,6 +21,17 @@
     margin-top: 100px; 
     border-radius: 15px;
     margin-left: 330px;
+  }
+
+  .box1 {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    flex-shrink: 0;
+    background: #FFF0F5;
+    margin-top: 100px; 
+    border-radius: 15px;
+    margin-left: 33px;
   }
 
 /* styles.css */
@@ -113,6 +124,23 @@
     outline: none;
     cursor: pointer;
   }
+
+  .button-upload1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 40px;
+    background: #FFDBAA;
+    border-radius: 10px;
+    margin-left: 430px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  
   .custom-alert {
     position: fixed;
     top: 50%;
@@ -133,3 +161,35 @@
     max-height: 100%; /* Maksimum tinggi gambar untuk membatasi ukuran kotak */
     border-radius: 15px;
   }
+
+  /* Update the existing CSS or create a new CSS file */
+  .meja-container {
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  /* Change 'table' to 'meja' in the class selector */
+  .meja {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 15px; /* Add border-radius property */
+    overflow: hidden; /* Ensure overflow is hidden to hide border lines */
+  }
+
+  /* Change 'th' and 'td' to 'meja th' and 'meja td' respectively */
+  .meja th, .meja td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    border: none; /* Remove border for cells */
+    color: rgba(0, 0, 0, 0.6) !important; 
+  }
+
+  .meja th {
+    background-color: #FFF0F5;
+  }
+
