@@ -77,10 +77,35 @@ const Profile = () => {
     setSelectedImage(images[index]);
   };
 
+  const saveUserDataToApi = async (userData) => {
+    try {
+      const response = await fetch('https://example.com/api/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save user data to API');
+      }
+
+      const responseData = await response.json();
+      // Handle the response data as needed
+      console.log('User data saved successfully:', responseData);
+    } catch (error) {
+      console.error('Error saving user data to API:', error.message);
+      throw error;
+    }
+  };
+
   const handleUsernameUpdate = () => {
     const newUsername = prompt('Enter new username:', username);
     if (newUsername !== null) {
       setUsername(newUsername);
+      // Simpan data ke API
+      saveUserDataToApi({ username: newUsername, description });
     }
   };
 
@@ -88,6 +113,8 @@ const Profile = () => {
     const newDescription = prompt('Enter new description:', description);
     if (newDescription !== null) {
       setDescription(newDescription);
+      // Simpan data ke API
+      saveUserDataToApi({ username, description: newDescription });
     }
   };
 
@@ -192,15 +219,15 @@ const Profile = () => {
                 style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: 'grey', borderRadius: '50%' }}
               />
             </div>
-              <div style={{ marginLeft: '10px', marginTop: '10px' }}>
-                <button onClick={handleUsernameUpdate} style={{ backgroundColor: '#FFD1DA', border: 'white', marginRight: '10px', color: 'rgba(0, 0, 0, 0.6)' }}>
-                  <FaRegEdit /> 
-                </button>
-                <button onClick={handleDescriptionUpdate} style={{ backgroundColor: '#FFD1DA', border: 'white',marginTop:'5px', display: 'flex', color: 'rgba(0, 0, 0, 0.6)'}}>
-                  <FaRegEdit /> 
-                </button>
-              </div>
-            <div style={{  marginTop: '30px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div style={{ marginLeft: '10px', marginTop: '10px' }}>
+              <button onClick={handleUsernameUpdate} style={{ backgroundColor: '#FFD1DA', border: 'white', marginRight: '10px', color: 'rgba(0, 0, 0, 0.6)' }}>
+                <FaRegEdit />
+              </button>
+              <button onClick={handleDescriptionUpdate} style={{ backgroundColor: '#FFD1DA', border: 'white', marginTop: '5px', display: 'flex', color: 'rgba(0, 0, 0, 0.6)' }}>
+                <FaRegEdit />
+              </button>
+            </div>
+            <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <h2 style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{username}</h2>
               <p style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.6)' }}>{description}</p>
             </div>
