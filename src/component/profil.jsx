@@ -1,15 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { MdOutlineAccountCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { MDBFooter, MDBContainer, MDBIcon, MDBBtn} from 'mdb-react-ui-kit';
+import { FiUploadCloud } from 'react-icons/fi';
+import { FaCheck } from 'react-icons/fa';
+import { BsFillBackspaceFill } from 'react-icons/bs';
+import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import './profil.css';
 import './upload.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Profile = () => {
+  const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  // Mengambil data gambar dari localStorage saat komponen dimount
+  useEffect(() => {
+    const storedImages = JSON.parse(localStorage.getItem('profileImages')) || [];
+    setImages(storedImages);
+  }, []);
+
+  const saveImagesToLocalStorage = (newImages) => {
+    // Menyimpan data gambar ke localStorage hanya jika ada perubahan
+    localStorage.setItem('profileImages', JSON.stringify(newImages));
+  };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newImages = [...images, reader.result];
+        setImages(newImages);
+        saveImagesToLocalStorage(newImages); // Menyimpan ke localStorage
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please upload a valid image file.');
+    }
+  };
+
+  const handleImageDelete = (index) => {
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    setImages(newImages);
+    saveImagesToLocalStorage(newImages); // Menyimpan ke localStorage
+  };
+
+  const handleImageSelect = (index) => {
+    setSelectedImage(images[index]);
+  };
 
   return (
     <div>
@@ -59,49 +101,100 @@ const Profile = () => {
         </nav>
       </header>
 
-      <section> 
-      <div className="container">
-        {/* Navbar sudah ada di atas, tambahkan konten berikut untuk box body */}
-        <div className="kotak-poto">
-          <h2>Welcome to Pawsitive Detect</h2>
-          <p>This is the body content of your page.</p>
+      <section>
+        <div className="body-profile">
+          {selectedImage ? (
+            <img
+              src={selectedImage}
+              alt="Selected"
+              className="img"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '150px' }}
+            />
+          ) : null}
+
+          {/* Formulir CRUD gambar */}
+          <div>
+            <p style={{ marginRight: '30px', color: 'rgba(0, 0, 0, 0.6) !important' }}>Upload your picture here</p>
+            <label htmlFor="image-upload" className="upload-icon-label">
+              <FiUploadCloud className="upload-icon" size={0} />
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              id="image-upload"
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+            />
+
+            {images.length > 0 && (
+              <div>
+                <ul>
+                  {images.map((image, index) => (
+                    <li key={index}>
+                      <button onClick={() => handleImageSelect(index)} className='upload-icon-label'>
+                        <FaCheck /> {/* Ganti dengan ikon select */}
+                      </button>
+                      <button onClick={() => handleImageDelete(index)} className="button-delete">
+                        <BsFillBackspaceFill /> {/* Ganti dengan ikon delete */}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+
+        <div className="body-kotak">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ maxWidth: '200px', maxHeight: '200px', overflow: 'hidden', borderRadius: '50%', marginTop: '30px', marginLeft: '30px' }}>
+              <img
+                src="/src/icon/profile-removebg-preview.png"
+                alt="Welcome Image"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: 'grey', borderRadius: '50%' }}
+              />
+            </div>
+            <div style={{ marginLeft: '30px', marginTop: '30px' }}>
+              <h2>Username</h2>
+              <p style={{ fontSize: '20px' }}>Custom Description by user</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <footer className="footer-section">
-            <MDBFooter className=' text-center text-white' style={{backgroundColor:'pink'}}>
-                <MDBContainer className='p-4 pb-0'>
-                    <section className='mb-4'>
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='facebook-f' />
-                    </MDBBtn>
+        <MDBFooter className=' text-center text-white' style={{ backgroundColor: 'pink' }}>
+          <MDBContainer className='p-4 pb-0'>
+            <section className='mb-4'>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='facebook-f' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='twitter' />
-                    </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='twitter' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='google' />
-                    </MDBBtn>
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='instagram' />
-                    </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='google' />
+              </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='instagram' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='linkedin-in' />
-                    </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='linkedin-in' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='github' />
-                    </MDBBtn>
-                    </section>
-                </MDBContainer>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='github' />
+              </MDBBtn>
+            </section>
+          </MDBContainer>
 
-                <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-                    © 2023 Copyright: Pawsitive
-                </div>
-                </MDBFooter>
+          <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+            © 2023 Copyright: Pawsitive
+          </div>
+        </MDBFooter>
       </footer>
     </div>
   );

@@ -78,7 +78,7 @@ const Upload = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/upload" className="nav-link" style={{ color: 'white' }}>
+                  <Link to="/profil" className="nav-link" style={{ color: 'white' }}>
                     <MdOutlineAccountCircle size={27} />
                   </Link>
                 </li>

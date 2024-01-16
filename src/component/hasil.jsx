@@ -88,7 +88,7 @@ const Hasil = () => {
                     </Link>
                     </li>
                     <li className="nav-item">
-                    <Link to="/upload" className="nav-link" style={{ color: 'white' }}>
+                    <Link to="/profil" className="nav-link" style={{ color: 'white' }}>
                         <MdOutlineAccountCircle size={27} />
                     </Link>
                     </li>
@@ -166,7 +166,7 @@ const Hasil = () => {
 
           <div className="paragraf1">
             <div className='button-upload1'>
-                <Link to="/upload"style={{ color: 'rgba(0, 0, 0, 0.6)'}} >
+                <Link to="/profil"style={{ color: 'rgba(0, 0, 0, 0.6)'}} >
                     Home
                 </Link>
             </div>
