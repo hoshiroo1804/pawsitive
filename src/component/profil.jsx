@@ -3,7 +3,7 @@ import { MdFavoriteBorder } from 'react-icons/md';
 import { MdOutlineAccountCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { FiUploadCloud } from 'react-icons/fi';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaRegEdit } from 'react-icons/fa';
 import { BsFillBackspaceFill } from 'react-icons/bs';
 import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import './profil.css';
@@ -15,6 +15,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const Profile = () => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [username, setUsername] = useState('Username');
+  const [description, setDescription] = useState('Custom Description by user');
 
   // Mengambil data gambar dari localStorage saat komponen dimount
   useEffect(() => {
@@ -23,20 +25,42 @@ const Profile = () => {
   }, []);
 
   const saveImagesToLocalStorage = (newImages) => {
-    // Menyimpan data gambar ke localStorage hanya jika ada perubahan
     localStorage.setItem('profileImages', JSON.stringify(newImages));
   };
 
-  const handleImageUpload = (event) => {
+  const uploadImageToApi = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('https://example.com/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image to API');
+      }
+
+      const responseData = await response.json();
+      return responseData.imageUrl;
+    } catch (error) {
+      console.error('Error uploading image to API:', error.message);
+      throw error;
+    }
+  };
+
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newImages = [...images, reader.result];
+      try {
+        const imageUrl = await uploadImageToApi(file);
+        const newImages = [...images, imageUrl];
         setImages(newImages);
-        saveImagesToLocalStorage(newImages); // Menyimpan ke localStorage
-      };
-      reader.readAsDataURL(file);
+        saveImagesToLocalStorage(newImages);
+      } catch (error) {
+        alert('Failed to upload image to API.');
+      }
     } else {
       alert('Please upload a valid image file.');
     }
@@ -46,11 +70,25 @@ const Profile = () => {
     const newImages = [...images];
     newImages.splice(index, 1);
     setImages(newImages);
-    saveImagesToLocalStorage(newImages); // Menyimpan ke localStorage
+    saveImagesToLocalStorage(newImages);
   };
 
   const handleImageSelect = (index) => {
     setSelectedImage(images[index]);
+  };
+
+  const handleUsernameUpdate = () => {
+    const newUsername = prompt('Enter new username:', username);
+    if (newUsername !== null) {
+      setUsername(newUsername);
+    }
+  };
+
+  const handleDescriptionUpdate = () => {
+    const newDescription = prompt('Enter new description:', description);
+    if (newDescription !== null) {
+      setDescription(newDescription);
+    }
   };
 
   return (
@@ -132,10 +170,10 @@ const Profile = () => {
                   {images.map((image, index) => (
                     <li key={index}>
                       <button onClick={() => handleImageSelect(index)} className='upload-icon-label'>
-                        <FaCheck /> {/* Ganti dengan ikon select */}
+                        <FaCheck />
                       </button>
                       <button onClick={() => handleImageDelete(index)} className="button-delete">
-                        <BsFillBackspaceFill /> {/* Ganti dengan ikon delete */}
+                        <BsFillBackspaceFill />
                       </button>
                     </li>
                   ))}
@@ -147,16 +185,24 @@ const Profile = () => {
 
         <div className="body-kotak">
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ maxWidth: '200px', maxHeight: '200px', overflow: 'hidden', borderRadius: '50%', marginTop: '30px', marginLeft: '30px' }}>
+            <div style={{ maxWidth: '200px', maxHeight: '200px', overflow: 'hidden', borderRadius: '50%', marginTop: '5px', marginLeft: '10px' }}>
               <img
                 src="/src/icon/profile-removebg-preview.png"
                 alt="Welcome Image"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: 'grey', borderRadius: '50%' }}
               />
             </div>
-            <div style={{ marginLeft: '30px', marginTop: '30px' }}>
-              <h2>Username</h2>
-              <p style={{ fontSize: '20px' }}>Custom Description by user</p>
+              <div style={{ marginLeft: '10px', marginTop: '10px' }}>
+                <button onClick={handleUsernameUpdate} style={{ backgroundColor: '#FFD1DA', border: 'white', marginRight: '10px', color: 'rgba(0, 0, 0, 0.6)' }}>
+                  <FaRegEdit /> 
+                </button>
+                <button onClick={handleDescriptionUpdate} style={{ backgroundColor: '#FFD1DA', border: 'white',marginTop:'5px', display: 'flex', color: 'rgba(0, 0, 0, 0.6)'}}>
+                  <FaRegEdit /> 
+                </button>
+              </div>
+            <div style={{  marginTop: '30px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <h2 style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{username}</h2>
+              <p style={{ fontSize: '20px', color: 'rgba(0, 0, 0, 0.6)' }}>{description}</p>
             </div>
           </div>
         </div>
