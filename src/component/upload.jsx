@@ -1,35 +1,59 @@
+// Upload.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { MdOutlineAccountCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { MDBFooter, MDBContainer, MDBCol, MDBRow, MDBIcon, MDBBtn} from 'mdb-react-ui-kit';
-import './upload.css';
+import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Upload = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showSpinner, setShowSpinner] = useState(false);
-  const navigate = useNavigate(); // Updated usage
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const navigate = useNavigate();
 
-  const handlePublish = () => {
-    console.log("Publish button clicked!");
+  const handlePublish = async () => {
+    console.log('Tombol Publish diklik!');
     setShowSpinner(true);
-
-    // Simulate data processing
-    setTimeout(() => {
-      console.log('Data processing completed.');
+  
+    const URL_API = 'https://apis.server05.my.id/uploadfile/';
+  
+    try {
+      const formData = new FormData();
+      formData.append('image', selectedImage);
+      formData.append('title', title);
+      formData.append('description', description);
+  
+      const response = await fetch(URL_API, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors', // Tambahkan ini
+      });
+  
+      console.log('Respons:', response);
+  
+      if (response.ok) {
+        console.log('Pemrosesan data selesai.');
+        setShowSpinner(false);
+        navigate('/hasil');
+      } else {
+        console.error('Gagal mengunggah gambar.');
+        setShowSpinner(false);
+      }
+    } catch (error) {
+      console.error('Error selama pengunggahan:', error);
       setShowSpinner(false);
-      navigate('/hasil'); // Updated navigation
-    }, 2000);
+    }
   };
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-  
+
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -92,18 +116,14 @@ const Upload = () => {
         <div className="container">
           <h2>Body Section</h2>
           <div className="box">
-            {/* Tampilkan gambar di dalam box jika ada yang dipilih */}
             {selectedImage && (
-              <>
-                <img
-                  src={selectedImage}
-                  alt="Selected"
-                  className="selected-image"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </>
+              <img
+                src={selectedImage}
+                alt="Selected"
+                className="selected-image"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             )}
-            {/* Input file tetap ada tetapi tidak ditampilkan */}
             <input
               type="file"
               id="myFile"
@@ -115,23 +135,34 @@ const Upload = () => {
             />
           </div>
 
-          {/* Form 1 */}
           <div className="form">
             <form>
               <div className="form-group">
-                <input type="text" id="name" name="name" placeholder="Title Of Artwork" />
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Title Of Artwork"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
               </div>
             </form>
           </div>
 
-          {/* Form 2 */}
           <div className="form1">
             <form>
-              <input type="text" id="name" name="name" placeholder="Description Of Artwork" />
+              <input
+                type="text"
+                id="description"
+                name="description"
+                placeholder="Description Of Artwork"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </form>
           </div>
 
-          {/* Paragraf */}
           <div>
             <div className="paragraf">
               <p>By Clicking Publish You Have Agreed With Our</p>
@@ -140,12 +171,11 @@ const Upload = () => {
               </a>
             </div>
             <div className="paragraf" style={{ position: 'relative', minHeight: '200px' }}>
-              {/* Tampilkan Spinner jika showSpinner bernilai true */}
               {showSpinner ? (
                 <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: 0, left: 0, right: 210, bottom: 0 }}>
                   <Spinner animation="border" variant="primary" />
                   <div>
-                  <p style={{color: 'rgba(0, 0, 0, 0.6)',marginLeft:'13px', marginTop:'5px'}}>Loading. . .</p>
+                    <p style={{ color: 'rgba(0, 0, 0, 0.6)', marginLeft: '13px', marginTop: '5px' }}>Loading. . .</p>
                   </div>
                 </div>
               ) : (
@@ -164,38 +194,38 @@ const Upload = () => {
       </section>
 
       <footer className="footer-section">
-            <MDBFooter className=' text-center text-white' style={{backgroundColor:'pink'}}>
-                <MDBContainer className='p-4 pb-0'>
-                    <section className='mb-4'>
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='facebook-f' />
-                    </MDBBtn>
+        <MDBFooter className=' text-center text-white' style={{backgroundColor:'pink'}}>
+          <MDBContainer className='p-4 pb-0'>
+            <section className='mb-4'>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='facebook-f' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='twitter' />
-                    </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='twitter' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='google' />
-                    </MDBBtn>
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='instagram' />
-                    </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='google' />
+              </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='instagram' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='linkedin-in' />
-                    </MDBBtn>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='linkedin-in' />
+              </MDBBtn>
 
-                    <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
-                        <MDBIcon fab icon='github' />
-                    </MDBBtn>
-                    </section>
-                </MDBContainer>
+              <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
+                <MDBIcon fab icon='github' />
+              </MDBBtn>
+            </section>
+          </MDBContainer>
 
-                <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-                    © 2023 Copyright: Pawsitive
-                </div>
-                </MDBFooter>
+          <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+            © 2023 Copyright: Pawsitive
+          </div>
+        </MDBFooter>
       </footer>
     </div>
   );

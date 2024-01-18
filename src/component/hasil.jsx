@@ -18,7 +18,7 @@ const Hasil = () => {
 
   const fetchDataFromApi = async () => {
     try {
-      const response = await fetch('your-api-endpoint');
+      const response = await fetch('https://apis.server05.my.id/getfileai/ai');
       const data = await response.json();
       setArtworkData(data);
     } catch (error) {
