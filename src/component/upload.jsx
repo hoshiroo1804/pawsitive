@@ -16,7 +16,7 @@ const Upload = () => {
   const [description, setDescription] = useState('');
   const navigate = useNavigate();
 
-  const handlePublish = async () => {
+  const handlePublish = async () => {    
     console.log('Tombol Publish diklik!');
     setShowSpinner(true);
   
