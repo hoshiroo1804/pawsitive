@@ -1,0 +1,195 @@
+/* styles.css */
+
+.body-section {
+    width: 1263px;
+    height: 1100px;
+    background: #FFD1DA;
+  }
+
+  .footer-section {
+    width: 1263px;
+    height: 100px;
+    background: #ffc0cb;
+  }
+  
+  .box {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    flex-shrink: 0;
+    background: #FFF0F5;
+    margin-top: 100px; 
+    border-radius: 15px;
+    margin-left: 330px;
+  }
+
+  .box1 {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    flex-shrink: 0;
+    background: #FFF0F5;
+    margin-top: 100px; 
+    border-radius: 15px;
+    margin-left: 33px;
+  }
+
+/* styles.css */
+
+.form {
+    width: 700px;
+    height: 60px;
+    flex-shrink: 0;
+    background: #FFF0F5;
+    margin-top: 50px;
+    border-radius: 15px;
+    margin-left: 210px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .form1 {
+    width: 700px;
+    height: 60px;
+    flex-shrink: 0;
+    background: #FFF0F5;
+    margin-top: 30px;
+    border-radius: 15px;
+    margin-left: 210px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  /* Style untuk form-group (label dan input) */
+  .form-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .form label {
+    margin-right: 10px;
+  }
+  
+  .form input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background-color: #FFF0F5;
+    height: 60px;
+    width: 600px;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  .form1 input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background-color: #FFF0F5;
+    height: 60px;
+    width: 600px;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  .paragraf{
+    margin-left: 215px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  .styled-link {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+  }
+
+  .button-upload {
+    width: 250px;
+    height: 40px;
+    background: #FFDBAA;
+    border-radius: 10px;
+    margin-left: 220px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .button-upload1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 40px;
+    background: #FFDBAA;
+    border-radius: 10px;
+    margin-left: 430px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  
+  .custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFDBAA;
+    padding: 10px;
+    border-radius: 5px;
+    width: 250px;
+    height: 300px;
+    cursor: pointer;
+    z-index: 9999; /* Atur z-index agar alert muncul di atas layer web */
+  }
+  
+
+  .selected-image {
+    max-width: 100%; /* Maksimum lebar gambar sesuai dengan ukuran kotak */
+    max-height: 100%; /* Maksimum tinggi gambar untuk membatasi ukuran kotak */
+    border-radius: 15px;
+  }
+
+  /* Update the existing CSS or create a new CSS file */
+  .meja-container {
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  /* Change 'table' to 'meja' in the class selector */
+  .meja {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 15px; /* Add border-radius property */
+    overflow: hidden; /* Ensure overflow is hidden to hide border lines */
+  }
+
+  /* Change 'th' and 'td' to 'meja th' and 'meja td' respectively */
+  .meja th, .meja td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    border: none; /* Remove border for cells */
+    color: rgba(0, 0, 0, 0.6) !important; 
+  }
+
+  .meja th {
+    background-color: #FFF0F5;
+  }
+

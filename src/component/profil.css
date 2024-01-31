@@ -1,0 +1,96 @@
+.kotak-poto {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.body-profile {
+  max-width: 1263px;
+  width: 100%;
+  background: #FFF0F5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 75px;
+  padding: 80px;
+}
+
+.body-profile h2 {
+  margin-bottom: 10px;
+}
+
+.body-profile p {
+  margin-bottom: 20px;
+}
+
+.body-profile input[type="file"] {
+  margin-top: 20px;
+}
+
+.body-profile ul {
+  list-style: none;
+  padding: 0;
+}
+
+.body-profile li {
+  margin-bottom: 10px;
+}
+
+.body-profile img {
+  max-width: 100%;
+  max-height: 200px;
+  margin-top: 10px;
+}
+
+.body-kotak > div {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.body-kotak img {
+  width: 100%; /* Mengisi lebar container parent */
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: grey;
+}
+
+.body-kotak {
+  max-width: 1263px;
+  width: 100%;
+  height: 300px;
+  background: #FFD1DA;
+  padding: 1px;
+  padding-bottom: 70px;
+
+}
+
+/* Tambahkan gaya berikut untuk menghilangkan background dari button */
+.upload-icon-label,
+.button-delete {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: black;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
+.image-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+
+/* Media query untuk layar dengan lebar 768px atau lebih kecil */
+@media only screen and (max-width: 768px) {
+  .body-kotak {
+    height: auto; /* Tidak tetap pada tinggi 300px pada layar kecil */
+  }
+}
