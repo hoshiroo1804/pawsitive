@@ -14,54 +14,44 @@ const Upload = () => {
   const [description, setDescription] = useState('');
   const navigate = useNavigate();
 
-  const handlePublish = async () => {    
-    console.log('Tombol Publish diklik!');
-    setShowSpinner(true);
+  // Definisikan URL API di dalam komponen Upload
+  const API_URL = 'https://apis.server05.my.id/uploadfile/';
+
+  const handlePublish = async () => {
+      console.log('Tombol Publish diklik!');
+      setShowSpinner(true);
   
-    const URL_API = 'https://apis.server05.my.id/uploadfile/';
+      try {
+          const filename = selectedImage.name; // Mendapatkan nama file
+          const binary_data = selectedImage; // Mendapatkan data biner dari file
   
-    try {
-      const formData = new FormData();
-      formData.append('image', selectedImage);
-      formData.append('title', title);
-      formData.append('description', description);
+          const files = { "file": { filename, binary_data } }; // Membuat objek file dalam format yang diinginkan
   
-      const response = await fetch(URL_API, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors', // Tambahkan ini
-      });
+          const response = await fetch(API_URL, {
+              method: 'POST',
+              body: JSON.stringify({ files }), // Mengonversi objek file ke JSON dan mengirimnya
+              headers: {
+                  'Content-Type': 'application/json' // Mengatur header Content-Type ke application/json
+              }
+          });
   
-      console.log('Respons:', response);
+          console.log('Respons:', response);
   
-      if (response.ok) {
-        console.log('Pemrosesan data selesai.');
-        setShowSpinner(false);
-        navigate('/hasil');
-      } else {
-        console.error('Gagal mengunggah gambar.');
-        setShowSpinner(false);
+          if (response.ok) {
+              console.log('Pemrosesan data selesai.');
+              setShowSpinner(false);
+              navigate('/hasil');
+          } else {
+              console.error('Gagal mengunggah gambar.');
+              setShowSpinner(false);
+          }
+  
+      } catch (error) {
+          console.error('Error selama pengunggahan:', error);
+          setShowSpinner(false);
       }
-
-      const fileReader = new FileReader();
-      fileReader.readAsArrayBuffer(file);
-  
-      fileReader.onload = async () => {
-        const binaryData = fileReader.result;
-  
-        const response = await fetch(url, {
-          method: 'POST',
-          headers,
-          body: new Blob([binaryData], { type: file.type }),
-        });
-      };
-      
-    } catch (error) {
-      console.error('Error selama pengunggahan:', error);
-      setShowSpinner(false);
-    }
   };
-
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
@@ -74,7 +64,7 @@ const Upload = () => {
       reader.readAsDataURL(file);
     }
   };
-
+  
   return (
     <div>
       <header>
