@@ -1,9 +1,7 @@
-// Upload.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import { MdFavoriteBorder } from 'react-icons/md';
-import { MdOutlineAccountCircle } from 'react-icons/md';
+import { MdFavoriteBorder, MdOutlineAccountCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -44,12 +42,25 @@ const Upload = () => {
         console.error('Gagal mengunggah gambar.');
         setShowSpinner(false);
       }
+
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(file);
+  
+      fileReader.onload = async () => {
+        const binaryData = fileReader.result;
+  
+        const response = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: new Blob([binaryData], { type: file.type }),
+        });
+      };
+      
     } catch (error) {
       console.error('Error selama pengunggahan:', error);
       setShowSpinner(false);
     }
   };
-  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -69,9 +80,9 @@ const Upload = () => {
       <header>
         <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: '#FBA1B7' }}>
           <div className="container">
-            <a className="navbar-brand" style={{ color: 'white', fontSize: '28px' }}>
+            <Link className="navbar-brand" style={{ color: 'white', fontSize: '28px' }} to="/">
               Pawsitive Detect
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -166,9 +177,9 @@ const Upload = () => {
           <div>
             <div className="paragraf">
               <p>By Clicking Publish You Have Agreed With Our</p>
-              <a href="#" className="styled-link">
+              <Link to="#" className="styled-link">
                 Terms and Conditions
-              </a>
+              </Link>
             </div>
             <div className="paragraf" style={{ position: 'relative', minHeight: '200px' }}>
               {showSpinner ? (
