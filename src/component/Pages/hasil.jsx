@@ -55,7 +55,7 @@ const Hasil = () => {
       <header>
         <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: '#FBA1B7' }}>
           <div className="container">
-            <a className="navbar-brand" style={{ color: 'white', fontSize: '28px' }}>
+            <a className="navbar-brand" style={{ color: 'white', fontSize: '28px', marginLeft: '-100px' }}>
               Pawsitive Detect
             </a>
             <button
@@ -71,7 +71,7 @@ const Hasil = () => {
             </button>
 
             <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul className="navbar-nav">
+                <ul className="navbar-nav" style={{marginRight: '-100px'}}>
                     <li className="nav-item">
                     <Link to="/hasil" className="nav-link" style={{ color: 'white', fontSize: '18px' }}>
                         Home

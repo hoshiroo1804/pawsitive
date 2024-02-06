@@ -86,7 +86,7 @@ const Upload = () => {
             </button>
 
             <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul className="navbar-nav">
+              <ul className="navbar-nav" style={{marginRight: '-100px'}}>
                 <li className="nav-item">
                   <Link to="/hasil" className="nav-link" style={{ color: 'white', fontSize: '18px' }}>
                     Home

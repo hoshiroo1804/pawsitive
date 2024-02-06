@@ -1,3 +1,4 @@
+
 .kotak-poto {
   background-color: #ffffff;
   padding: 20px;
@@ -7,7 +8,7 @@
 }
 
 .body-profile {
-  width: 213vh;
+  width: 210.5vh;
   background: #FFF0F5;
   display: flex;
   flex-direction: column;
@@ -59,7 +60,7 @@
 }
 
 .body-kotak {
-  width: 213vh;
+  width: 100%;
   height: 300px;
   background: #FFD1DA;
   padding: 1px;
@@ -86,7 +87,7 @@
 }
 
 .footer-section {
-  width: 213vh;
+  width: 100%;
   background-color: pink;
 }
 
