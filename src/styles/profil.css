@@ -7,8 +7,7 @@
 }
 
 .body-profile {
-  max-width: 1263px;
-  width: 100%;
+  width: 213vh;
   background: #FFF0F5;
   display: flex;
   flex-direction: column;
@@ -60,8 +59,7 @@
 }
 
 .body-kotak {
-  max-width: 1263px;
-  width: 100%;
+  width: 213vh;
   height: 300px;
   background: #FFD1DA;
   padding: 1px;
@@ -87,6 +85,10 @@
   margin-top: 10px;
 }
 
+.footer-section {
+  width: 213vh;
+  background-color: pink;
+}
 
 /* Media query untuk layar dengan lebar 768px atau lebih kecil */
 @media only screen and (max-width: 768px) {

@@ -1,0 +1,41 @@
+/* LoginPage.css */
+
+.background-container {
+    display: flex;
+    background-color: #FFD1DA; /* Warna latar belakang */
+    overflow: hidden; /* Mengatasi masalah sudut border radius pada gambar */
+    height: 100vh; /* Sesuaikan tinggi dengan tinggi viewport */
+    width: 213vh;
+  }
+  
+  .leftlogin-container {
+    text-align: center;
+    padding: 20px;
+    width: 50%;
+    position: relative;
+  }
+  
+  .rightlogin-container {
+    padding: 20px;
+    width: 50%;
+  }
+  
+  /* Gaya tambahan sesuai kebutuhan */
+  .Login-judul {
+    color: #fff; /* Mengubah warna teks untuk lebih kontras pada latar belakang gelap */
+    font-size: 24px;
+  }
+  
+  .login-text {
+    color: #fff; /* Mengubah warna teks untuk lebih kontras pada latar belakang gelap */
+  }
+  
+  /* Styling untuk elemen img */
+  .leftlogin-container img {
+    width: 100%; /* Mengikuti lebar parent (leftlogin-container) */
+    max-width: 350px; /* Menambahkan batas maksimum lebar gambar */
+    height: auto; /* Agar rasio aspek gambar tetap terjaga */
+    display: block; /* Agar gambar tidak terkena margin bawah */
+    margin: 0 auto; /* Untuk memusatkan gambar di dalam parent */
+  }
+  

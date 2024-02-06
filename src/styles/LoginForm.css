@@ -1,0 +1,58 @@
+/* LoginForm.css */
+
+.loginform-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  width: 400px; /* Sesuaikan lebar form sesuai kebutuhan */
+  height: 500px;
+  padding: 25px;
+  border-radius: 8px;
+  background: #FFF0F5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 45px;
+  margin-left: 45px;
+}
+
+.login-label {
+  display: block;
+  margin-bottom: 30px;
+}
+
+.login-input {
+  position: center;
+  width: 90%;
+  padding: 20px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-left: 15px;
+}
+
+.login-button {
+  display: inline-block;
+  padding: 10px 20px;
+  width: 90%;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 15px;
+  background: #FFDBAA;
+  color: rgba(0, 0, 0, 0.60);
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
+
+.forgot-password-link a,
+.privacy-link a {
+  color: rgba(0, 0, 0, 0.60); /* Warna tautan */
+  text-decoration: none; /* Menghapus garis bawah default pada tautan */
+}

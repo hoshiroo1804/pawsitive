@@ -1,0 +1,42 @@
+/* Headerdua.css */
+
+.headerdua-container {
+  background-color: rgba(251, 161, 183, 1);
+  padding: 10px;
+  color: #fff; /* Text color */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerdua-judul {
+  color: #FFF;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+}
+
+.headerdua-links {
+  display: flex;
+  gap: 5px;
+}
+
+.headerdua-links button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.headerdua-links button img {
+  width: 45px; /* Adjust the size of the icons */
+  height: 35px;
+  margin-right: 5px; /* Add space between the icon and text */
+}
+
+.headerdua-links button:hover {
+  background-color: transparent;
+  transform: scale(1.1);
+}

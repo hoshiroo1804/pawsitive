@@ -1,0 +1,35 @@
+/* Headersatu.css */
+
+.headersatu-container {
+  background-color: rgba(251, 161, 183, 1);
+  padding: 16px;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headersatu-judul {
+  color: #FFF;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+}
+
+.headersatu-links {
+  display: flex;
+  gap: 5px;
+}
+
+.headersatu-links button {
+  background-color: transparent;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.headersatu-links button:hover {
+  background-color: transparent;
+  transform: scale(1.1); 
+}
