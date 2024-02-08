@@ -7,61 +7,45 @@ import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
-const Upload = () => {
+function Upload() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showSpinner, setShowSpinner] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const navigate = useNavigate();
 
-  // Definisikan URL API di dalam komponen Upload
-  const API_URL = 'https://apis.server05.my.id/uploadfile/';
+  const API_URL = '/api/uploadfile/';
 
-  const handlePublish = async () => {
-      console.log('Tombol Publish diklik!');
-      setShowSpinner(true);
-  
-      try {
-          const filename = selectedImage.name; // Mendapatkan nama file
-          const binary_data = selectedImage; // Mendapatkan data biner dari file
-  
-          const files = { "file": { filename, binary_data } }; // Membuat objek file dalam format yang diinginkan
-  
-          const response = await fetch(API_URL, {
-              method: 'POST',
-              body: JSON.stringify({ files }), // Mengonversi objek file ke JSON dan mengirimnya
-              headers: {
-                  'Content-Type': 'application/json' // Mengatur header Content-Type ke application/json
-              }
-          });
-  
-          console.log('Respons:', response);
-  
-          if (response.ok) {
-              console.log('Pemrosesan data selesai.');
-              setShowSpinner(false);
-              navigate('/hasil');
-          } else {
-              console.error('Gagal mengunggah gambar.');
-              setShowSpinner(false);
-          }
-  
-      } catch (error) {
-          console.error('Error selama pengunggahan:', error);
-          setShowSpinner(false);
-      }
-  };
-  
-  const handleFileChange = (event) => {
+  const handlePublish = async (event) => {
     const file = event.target.files[0];
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        console.log('reader.result:', reader.result);
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) {
+      console.error('Tidak ada gambar yang dipilih');
+      return;
+    }
+
+    setShowSpinner(true);
+
+    try {
+      const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
+
+      const files = { "file": { name: file.name, data: fileBlob } };
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(files),
+      });
+
+      if (response.ok) {
+        console.log('Pemrosesan data selesai.');
+        setShowSpinner(false);
+        navigate('/hasil');
+      } else {
+        console.error('Gagal mengunggah gambar.');
+        setShowSpinner(false);
+      }
+
+    } catch (error) {
+      console.error('Error selama pengunggahan:', error);
+      setShowSpinner(false);
     }
   };
   

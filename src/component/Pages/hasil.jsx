@@ -8,8 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
+
 const Hasil = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
   const [artworkData, setArtworkData] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,11 @@ const Hasil = () => {
 
   const fetchDataFromApi = async () => {
     try {
-      const response = await fetch('https://apis.server05.my.id/getfileai/ai');
+      const response = await fetch('/api/getfileai'); // Sesuaikan dengan endpoint yang benar
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
       setArtworkData(data);
     } catch (error) {
@@ -27,7 +31,7 @@ const Hasil = () => {
   };
 
   const handlePublish = () => {
-    console.log("Publish button clicked!");
+    console.log('Publish button clicked!');
     // Additional logic or state changes can be added here
   };
 
@@ -38,7 +42,7 @@ const Hasil = () => {
       const reader = new FileReader();
       reader.onload = () => {
         console.log('reader.result:', reader.result);
-        setSelectedImage(reader.result);
+        // Handle the loaded image data as needed
       };
       reader.readAsDataURL(file);
     }
@@ -49,7 +53,7 @@ const Hasil = () => {
     console.log('Image clicked:', imageUrl);
     // Add logic to handle image click
   };
-
+  
   return (
     <div>
       <header>
