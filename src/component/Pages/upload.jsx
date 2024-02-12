@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { MdFavoriteBorder, MdOutlineAccountCircle } from 'react-icons/md';
@@ -7,32 +7,38 @@ import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
-function Upload() {
-  const [selectedImage, setSelectedImage] = useState(null);
+const Upload = () => {
+  const [selectedImage, setSelectedImage] = useState('');
   const [showSpinner, setShowSpinner] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const navigate = useNavigate();
 
+  // Definisikan URL API di dalam komponen Upload
   const API_URL = '/api/uploadfile/';
 
-  const handlePublish = async (event) => {
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setSelectedImage(file);
+  };
 
-    if (!file) {
-      console.error('Tidak ada gambar yang dipilih');
-      return;
-    }
-
+  const handlePublish = async (event) => {
+    event.preventDefault();
+    console.log('Form submitted!');
     setShowSpinner(true);
 
     try {
-      const fileBlob = new Blob([await file.arrayBuffer()], { type: file.type });
-
-      const files = { "file": { name: file.name, data: fileBlob } };
+      const formData = new FormData();
+      formData.append('file', selectedImage);
+      formData.append('title', title);
+      formData.append('description', description);
 
       const response = await fetch(API_URL, {
         method: 'POST',
-        body: JSON.stringify(files),
+        body: formData,
       });
+
+      console.log('Respons:', response);
 
       if (response.ok) {
         console.log('Pemrosesan data selesai.');
@@ -42,13 +48,12 @@ function Upload() {
         console.error('Gagal mengunggah gambar.');
         setShowSpinner(false);
       }
-
     } catch (error) {
       console.error('Error selama pengunggahan:', error);
       setShowSpinner(false);
     }
   };
-  
+
   return (
     <div>
       <header>
