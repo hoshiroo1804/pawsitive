@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { MdOutlineAccountCircle } from 'react-icons/md';
-import { MDBFooter, MDBContainer, MDBCol, MDBRow, MDBIcon, MDBBtn} from 'mdb-react-ui-kit';
+import { MDBFooter, MDBContainer, MDBCol, MDBRow, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import '../../styles/upload.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import "@fortawesome/fontawesome-free/css/all.min.css";
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Hasil = () => {
   const [artworkData, setArtworkData] = useState([]);
@@ -20,11 +19,16 @@ const Hasil = () => {
     try {
       const response = await fetch('/api/getfileai'); // Sesuaikan dengan endpoint yang benar
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error('HTTP error! Status: ' + response.status);
       }
-
+  
       const data = await response.json();
-      setArtworkData(data);
+      const modifiedData = data.map(artwork => {
+        const blob = new Blob([artwork.imageData], { type: 'image/jpeg' });
+        const url = URL.createObjectURL(blob);
+        return { ...artwork, imageUrl: url };
+      });
+      setArtworkData(modifiedData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -35,25 +39,12 @@ const Hasil = () => {
     // Additional logic or state changes can be added here
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        console.log('reader.result:', reader.result);
-        // Handle the loaded image data as needed
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Assume you have a function handleImageClick to handle the click event
   const handleImageClick = (imageUrl) => {
     console.log('Image clicked:', imageUrl);
     // Add logic to handle image click
   };
-  
+
+
   return (
     <div>
       <header>
@@ -112,7 +103,7 @@ const Hasil = () => {
                   <tr key={index}>
                     <td>
                       <img
-                        src={artwork.imageUrl} // Assuming there is an 'imageUrl' property in your artwork data
+                        src={artwork.imageUrl}
                         alt={`Uploaded Image ${index}`}
                         style={{ width: '50px', height: '50px', cursor: 'pointer' }}
                         onClick={() => handleImageClick(artwork.imageUrl)}
@@ -126,41 +117,19 @@ const Hasil = () => {
           
           <div className="meja-container">
             <table className="meja">
-              {/* ID */}
+              {/* ID, Title, Description */}
               <thead>
                 <tr>
-                  <th style={{ fontWeight: 'normal' }}>Placeholder for ID</th>
-                </tr>
-              </thead>
-              <tbody>
-                {artworkData.map((artwork) => (
-                  <tr key={artwork.id}>
-                    <td>{artwork.id}</td>
-                  </tr>
-                ))}
-              </tbody>
-              {/* Title */}
-              <thead>
-                <tr>
+                  <th style={{ fontWeight: 'normal' }}>ID</th>
                   <th style={{ fontWeight: 'normal' }}>Title</th>
-                </tr>
-              </thead>
-              <tbody>
-                {artworkData.map((artwork) => (
-                  <tr key={artwork.id}>
-                    <td>{artwork.title}</td>
-                  </tr>
-                ))}
-              </tbody>
-              {/* Description */}
-              <thead>
-                <tr>
                   <th style={{ fontWeight: 'normal' }}>Description</th>
                 </tr>
               </thead>
               <tbody>
                 {artworkData.map((artwork) => (
                   <tr key={artwork.id}>
+                    <td>{artwork.id}</td>
+                    <td>{artwork.title}</td>
                     <td>{artwork.description}</td>
                   </tr>
                 ))}
@@ -170,9 +139,9 @@ const Hasil = () => {
 
           <div className="paragraf1">
             <div className='button-upload1'>
-                <Link to="/profil"style={{ color: 'rgba(0, 0, 0, 0.6)'}} >
-                    Home
-                </Link>
+              <Link to="/profil" style={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+                Home
+              </Link>
             </div>
           </div>
         </div>
@@ -215,5 +184,4 @@ const Hasil = () => {
     </div>
   );
 };
-
 export default Hasil;
